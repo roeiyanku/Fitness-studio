@@ -1,9 +1,50 @@
+import java.util.ArrayList;
+
 /**
- * Gym class
+ * Gym class. There can only be one
  */
 
 
-public class Gym {
-    String name;
+class Gym {
+    private static Gym instance;
+
+    private String gymName;
+    private Secretary currentSecretary;
+
+
+    // Constructor:
+    private Gym (){
+
+        this.gymName = null;
+        this.currentSecretary = null;
+
+    }
+
+    public static Gym getInstance(){
+        if (instance == null){
+            instance = new Gym();
+        }
+        return instance;
+    }
+
+
+    public void setName(String name){
+        this.gymName = name;
+    }
+
+    public Secretary getSecretary(){
+        return currentSecretary;
+    }
+
+    public void setSecretary(Person person, int salary) {
+        if (currentSecretary != null) {
+            currentSecretary.setActive(False);
+
+            currentSecretary.setPerson(person);
+            currentSecretary.salary = salary;
+            currentSecretary.setActive(True);
+
+        }
+    }
 
 }

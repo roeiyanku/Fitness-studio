@@ -1,18 +1,17 @@
 /**
  *Person class
 */
-/*public enum Gender {
-    Male,
-    Female
-}
-*/
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.Period;
+
+
 public class Person {
+
     private Gender gender;
-    int age;
     String birthday;
     String name;
     int balance;
-    int id;
 
 
 
@@ -21,12 +20,12 @@ public class Person {
 
 //Constructor
 
-    public Person(String name, int balance, Gender gender, String birthday, int id){
+    public Person(String name, int balance, Gender gender, String birthday){
         this.name = name;
         this.balance = balance;
         this.gender = gender;
         this.birthday = birthday;
-        this.id = id;
+
 
     }
 
@@ -36,47 +35,35 @@ public class Person {
     public String getName(){
         return name;
     }
-
-    public int getMoney(){
+    public int getBalance(){
         return balance;
     }
-    public void setMoney(int balance){
+    public void setBalance(int balance){
+
         this.balance = balance;
     }
+    public Gender getGender() {
+        return gender;}
 
     public String getBirthday(){
-        return birthday;
+    return birthday;
     }
 
-    public int getAge(){
-        return age;
+
+
+    // Calculate the age of the person based on birthdate
+    public int calculateAge() {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            LocalDate birthDate = LocalDate.parse(this.birthday, formatter);
+            LocalDate currentDate = LocalDate.now();
+            return Period.between(birthDate, currentDate).getYears();
     }
-     public int getId(){
-        return id;
-     }
+     
+    // toString Method
+      @Override
+      public String toString() {
+          return String.format("Name: %s | Gender: %s | Birthday: %s | Age: %d | Balance: %d",
+                  name, gender.toString(), birthday, calculateAge(), balance);
 
-    @Override
-    public String toString(){
-        return "P";
-    }
-
-    //    // Calculate age based on birth date
-    //    private int calculateAge() {
-    //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    //        LocalDate birthDate = LocalDate.parse(this.birthday, formatter);
-    //        LocalDate currentDate = LocalDate.now();
-    //        Period period = Period.between(birthDate, currentDate);
-    //        return period.getYears();
-    //    }
-    //
-    //    // toString Method
-    //    @Override
-    //    public String toString() {
-    //        return String.format("ID: %d | Name: %s | Gender: %s | Birthday: %s | Age: %d | Balance: %d",
-    //                id, name, gender, birthday, calculateAge(), money);
-    //    }
-
-    //Need to create a method to calculate the age of the person.
-
-
+      }
 }

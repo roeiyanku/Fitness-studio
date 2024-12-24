@@ -5,23 +5,23 @@ import java.util.ArrayList;
  */
 
 public class Client {
-    private Person person; //Delegation
+    private Person person;
+    int id;
     private ArrayList<String> messages;
 
 
 
 
-
-    //constructor:
-    public Client(String name, int balance, Person.Gender gender, String birthday) {
-        this.person = new Person(name, balance, gender, birthday); //Delegation Initialized
-    }
-
-
     public String getName(){
+
         return person.getName();
     }
 
+    @Override
+    public String toString() {
+        return String.format("ID: %d | Name: %s | Gender: %s | Birthday: %s | Age: %d | Balance: %d",
+                id, getName(), person.getGender(), person.getBirthday(), person.calculateAge(), person.getBalance());
+    }
 
 
 
