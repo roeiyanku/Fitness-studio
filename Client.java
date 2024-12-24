@@ -6,21 +6,28 @@ import java.util.ArrayList;
 
 public class Client {
     private Person person;
-    int id;
-    private ArrayList<String> messages;
+    private ArrayList<String> messages = new ArrayList<>();
 
 
 
+    public int getID(){
+        return person.getID();
+    }
 
     public String getName(){
-
         return person.getName();
     }
 
+
+    private void getNotifications (){
+    }
+
+
     @Override
     public String toString() {
-        return String.format("ID: %d | Name: %s | Gender: %s | Birthday: %s | Age: %d | Balance: %d",
-                id, getName(), person.getGender(), person.getBirthday(), person.calculateAge(), person.getBalance());
+       return  "ID: " + getID() + " | Name: " + getName() + " | Gender: " + person.getGender() +
+                " | Birthday: " + person.getBirthday() + " | Age: " + person.calculateAge() +
+                " | Balance: " + person.getBalance();
     }
 
 

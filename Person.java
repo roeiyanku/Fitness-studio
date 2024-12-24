@@ -12,6 +12,8 @@ public class Person {
     String birthday;
     String name;
     int balance;
+    int id;
+    int counter = 0;
 
 
 
@@ -25,6 +27,8 @@ public class Person {
         this.balance = balance;
         this.gender = gender;
         this.birthday = birthday;
+        this.id = 1111 + counter;
+        counter ++;
 
 
     }
@@ -45,6 +49,10 @@ public class Person {
     public Gender getGender() {
         return gender;}
 
+    public int getID(){
+        return id;
+    }
+
     public String getBirthday(){
     return birthday;
     }
@@ -62,8 +70,7 @@ public class Person {
     // toString Method
       @Override
       public String toString() {
-          return String.format("Name: %s | Gender: %s | Birthday: %s | Age: %d | Balance: %d",
-                  name, gender.toString(), birthday, calculateAge(), balance);
-
+          return  "Name: " + name + " | Gender: " + gender + " | Birthday: " + birthday +
+                  " | Age: " + calculateAge() + " | Balance: " + balance;
       }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 class Gym {
     private static Gym instance;
-
+    private ArrayList<Client> clients = new ArrayList<>();
     private String gymName;
     private Secretary currentSecretary;
 
@@ -26,7 +26,9 @@ class Gym {
         }
         return instance;
     }
-
+    public ArrayList<Client> getClients() {
+        return new ArrayList<>(clients);
+    }
 
     public void setName(String name){
         this.gymName = name;
