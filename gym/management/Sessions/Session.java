@@ -17,6 +17,8 @@ public class Session {
     private ArrayList<Client> participants;
     private int maxParticipants;
     private int price;
+    int sessionID;
+    int counter = 0;
 
 
 
@@ -47,6 +49,10 @@ public class Session {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getSessionID(){
+        return sessionID;
     }
 
     public Session(int price, int capacity, String date, ForumType forumType, Instructor instructor){

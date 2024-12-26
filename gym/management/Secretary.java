@@ -106,6 +106,9 @@ public class Secretary extends Person implements NotificationSubject {
         addAction("Unregistered client: " + client.getName());
     }
 
+
+
+
     public hireInstructor (Person person, int salary, List<SessionType> certifiedTypes){
         Instructor newInstructor = new Instructor(person, salary, certifiedTypes);
         addAction("Hired new instructor: " + person.getName() + " with hourly rate: " + salary);
@@ -113,20 +116,37 @@ public class Secretary extends Person implements NotificationSubject {
     }
 
 
-    private void addSession (SessionType sessionType, Date date , ForumType forumType, Instructor instructor){
-
-            this.sessionType = sessionType;
-            this.date = date;
-            this.forum = forum;
-            this.instructor = instructor;
-            this.maxParticipants = maxParticipants;
-            this.price = price;
-            this.participants = new ArrayList<>();
-
+    public Session addSession(SessionType type, String date, ForumType forum, Instructor instructor) throws InstructorNotQualifiedException {
+        if (!instructor.getcertified(type)) {
+            throw new InstructorNotQualifiedException();
+        }
+        Session newSession = createSession(type, date, forum, instructor);
+        sessions.put(newSession.getSessionID(), newSession);
+        addAction("Created new session: " + type + " on " + date + " with instructor: " + instructor.getName());
+        return newSession;
     }
 
-    private void registerClientToLesson (Client client, Session session){
+    private void registerClientToLesson(Client client, Session session) throws Exception {
+        if (!clients.containsKey(client.getID())) {
+            throw new ClientNotRegisteredException();
+        }
+        if (!sessions.containsKey(session.getSessionID())) {
+            throw new Exception();
+        }
+        session.addParticipant(client);
+        client.addSession(session);
+        addAction("Registered client: " + client.getName() + " to session: " + session.getType());
     }
+
+    public void unregisterClientFromLesson(Client client, Session session) throws Exception {
+        if (!sessions.containsKey(session.getSessionID()) || !clients.containsKey(client.getId())) {
+            throw new Exception("Client or session does not exist");
+        }
+        session.removeParticipant(client);
+        client.removeSession(session);
+        addAction("Unregistered client: " + client.getName() + " from session: " + session.getType());
+    }
+
 
     private void paySalaries (){
 

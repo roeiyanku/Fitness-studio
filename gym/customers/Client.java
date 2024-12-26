@@ -19,9 +19,19 @@ public class Client extends Person implements NotificationObserver{
     }
 
 
-    private void getNotifications (){
-    }
 
+ // get Notifications and add to the list
+ public void getNotifications(String message) {
+     messages.add(message);
+ }
+
+ //Print all messages the client has received
+    public void printMessages() {
+        System.out.println("Messages for " + getName() + ":");
+        for (String msg : messages) {
+            System.out.println(msg);
+        }
+    }
 
     @Override
     public String toString() {
