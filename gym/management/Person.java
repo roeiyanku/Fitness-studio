@@ -1,5 +1,5 @@
-/**
- *Person class
+package gym.management; /**
+ *gym.management.Person class
 */
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -70,7 +70,7 @@ public class Person {
     // toString Method
       @Override
       public String toString() {
-          return  "Name: " + name + " | Gender: " + gender + " | Birthday: " + birthday +
+          return  "Name: " + name + " | gym.management.Gender: " + gender + " | Birthday: " + birthday +
                   " | Age: " + calculateAge() + " | Balance: " + balance;
       }
 }

@@ -1,11 +1,16 @@
+package gym.management;
+
+import gym.customers.Client;
+import gym.management.Secretary;
+
 import java.util.ArrayList;
 
 /**
- * Gym class. There can only be one
+ * gym.management.Gym class. There can only be one
  */
 
 
-class Gym {
+public class Gym {
     private static Gym instance;
     private ArrayList<Client> clients = new ArrayList<>();
     private String gymName;
@@ -41,9 +46,11 @@ class Gym {
     public void setSecretary(Person person, int salary) {
         if (currentSecretary != null) {
             currentSecretary.setActive(False);
-
-            currentSecretary.setPerson(person);
-            currentSecretary.salary = salary;
+            Secretary newSecretary = new Secretary(person, salary);
+            newSecretary.setActive(True);
+        }
+        else {
+            Secretary newSecretary = new Secretary(person, salary);
             currentSecretary.setActive(True);
 
         }

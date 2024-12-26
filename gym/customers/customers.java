@@ -1,6 +1,4 @@
 package gym.customers;
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 

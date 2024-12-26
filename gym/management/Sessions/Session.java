@@ -1,8 +1,10 @@
 /**
  * Session class
  */
-import gym.management.ForumType;
-import gym.management.SessionType;
+
+package gym.management.Sessions;
+import gym.customers.Client;
+import gym.management.Instructor;
 
 import java.util.ArrayList;
 
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 public class Session {
     private SessionType sessionType;
     private String date;
-    private ForumType forum; //Male, Female, Seniors or All
+    private ForumType forumType; //Male, Female, Seniors or All
     private Instructor instructor;
     private ArrayList<Client> participants;
     private int maxParticipants;
@@ -28,7 +30,7 @@ public class Session {
     }
 
     public ForumType getForum() {
-        return forum;
+        return forumType;
     }
 
     public Instructor getInstructor() {
@@ -47,14 +49,24 @@ public class Session {
         return price;
     }
 
+    public Session(int price, int capacity, String date, ForumType forumType, Instructor instructor){
+        this.date = date;
+        this.forumType = forumType;
+        this.instructor = instructor;
+        this.maxParticipants = capacity;
+        this.price = price;
+        this.sessionID = 2000 + counter;
+        counter ++;
+    }
 
 
 
 
-//for example: Session Type: Pilates | Date: 23-01-2025 10:00 | Forum: All | Instructor: Yuval | Participants: 1/30
+
+//for example: gym.management.Sessions.Session Type: Pilates | Date: 23-01-2025 10:00 | Forum: All | gym.management.Instructor: Yuval | Participants: 1/30
     @Override
     public String toString() {
-        return "Session Type: " + sessionType + " | Date: " + date + " | Forum: " + forum + " | Instructor: " + instructor.getName() +
+        return "gym.management.Sessions.Session Type: " + sessionType + " | Date: " + date + " | Forum: " + forum + " | gym.management.Instructor: " + instructor.getName() +
                 " | Participants: " + participants.size() + "/" + maxParticipants;
     }
 }
