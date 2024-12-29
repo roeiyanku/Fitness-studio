@@ -1,9 +1,13 @@
 package gym.management;
 
 import gym.customers.Client;
-import gym.management.Secretary;
+import gym.customers.Person;
+import gym.management.Sessions.Session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * gym.management.Gym class. There can only be one
@@ -12,15 +16,19 @@ import java.util.ArrayList;
 
 public class Gym {
     private static Gym instance;
-    private ArrayList<Client> clients = new ArrayList<>();
     private String gymName;
+    public static int gymBalance;
     private Secretary currentSecretary;
+    public static List<String> actionsHistory = new ArrayList<>(); // actions History
+    public static Map<Integer, Client> clients = new HashMap<>(); // Saving clients by ID
+    public static Map<Integer, Session> sessions = new HashMap<>(); // Saving session by ID
 
 
     // Constructor:
     private Gym (){
 
         this.gymName = null;
+        this.gymBalance = 0;
         this.currentSecretary = null;
 
     }

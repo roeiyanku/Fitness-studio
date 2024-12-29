@@ -6,6 +6,6 @@ public class SessionFactory {
         int price = sessionType.getPrice();
         int capacity = sessionType.getCapacity();
 
-        return new Session(price, capacity, date,  forumType, instructor);
+        return new Session(price, capacity, date, forumType, instructor);
     }
 }

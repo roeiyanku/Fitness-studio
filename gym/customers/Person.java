@@ -1,6 +1,7 @@
-package gym.management; /**
- *gym.management.Person class
+package gym.customers; /**
+ *gym.customers.Person class
 */
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.Period;
@@ -11,7 +12,7 @@ public class Person {
     private Gender gender;
     String birthday;
     String name;
-    int balance;
+    public int balance;
     int id;
     int counter = 0;
 
@@ -71,7 +72,7 @@ public class Person {
     // toString Method
       @Override
       public String toString() {
-          return  "Name: " + name + " | gym.management.Gender: " + gender + " | Birthday: " + birthday +
+          return  "Name: " + name + " | gym.customers.Gender: " + gender + " | Birthday: " + birthday +
                   " | Age: " + calculateAge() + " | Balance: " + balance;
       }
 }

@@ -1,6 +1,4 @@
 package gym.customers;
-import gym.management.Gender;
-import gym.management.Person;
 
 import java.util.ArrayList;
 
@@ -15,7 +13,7 @@ public class Client extends Person implements NotificationObserver{
 
     public Client(Person person) {
         super(person.getName(), person.getBalance(), person.getGender(), person.getBirthday());
-        ArrayList<String> messages = new ArrayList<>();
+        this.messages = new ArrayList<>();
     }
 
 
@@ -35,11 +33,10 @@ public class Client extends Person implements NotificationObserver{
 
     @Override
     public String toString() {
-       return  "ID: " + getID() + " | Name: " + getName() + " | gym.management.Gender: " + getGender() +
+       return  "ID: " + getID() + " | Name: " + getName() + " | gym.customers.Gender: " + getGender() +
                 " | Birthday: " + getBirthday() + " | Age: " + calculateAge() +
                 " | Balance: " + getBalance();
     }
-
 
 
 }
