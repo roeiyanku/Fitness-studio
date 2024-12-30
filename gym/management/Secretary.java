@@ -3,15 +3,16 @@ import gym.Exception.*;
 import gym.customers.*;
 import gym.management.Sessions.ForumType;
 import gym.management.Sessions.Session;
-import gym.management.Sessions.SessionType;
+import gym.management.Sessions.SessionFactory;
+import gym.management.Sessions.SessionTypes.SessionType;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static gym.management.Gym.gymBalance;
 import static gym.management.Sessions.ForumType.getFilteredForumList;
-import static gym.management.Sessions.SessionFactory.createSession;
 
 /**
  * gym.management.Secretary class
@@ -41,39 +42,41 @@ public class Secretary extends Person implements NotificationSubject {
     }
 
 
+    //A message for client
+    public void notify(Client client, String message) {
+        Client.getNotifications(message);
+        addAction("Sent notification to client: " + message);
+    }
     //A message for all clients
-    @Override
-    protected void notifyClient(String message) {
+    public void notify(String message) {
         for (Client client : Gym.clients.values()) {
             Client.getNotifications(message);
         }
         addAction("Sent notification to all clients: " + message);
     }
-
     //A message for all clients in Session
-    protected void notifyClientForSession(Session session, String message) {
+    public void notify(Session session, String message) {
         for (Client client : session.getParticipants().values()) {
             Client.getNotifications(message);
         }
         addAction("Sent notification to client for session: " + message);
     }
-
-
-    protected void notifyClientsForSessionAndDay(String day, Session session, String message) {
-        Map<Session, List<NotificationObserver>> sessionMap = daySessionClients.get(day);
-        if (sessionMap != null) {
-            List<NotificationObserver> clientsForSession = sessionMap.get(session);
-            if (clientsForSession != null) {
-                for (NotificationObserver observer : clientsForSession) {
+    public void notify(String date, String message) {
+        // if the date is in format "dd-MM-yyyy"
+        Map<Session, List<NotificationObserver>> sessionsForDay = daySessionClients.get(date);
+        if (sessionsForDay != null) {
+            for (Map.Entry<Session, List<NotificationObserver>> entry : sessionsForDay.entrySet()) {
+                for (NotificationObserver observer : entry.getValue()) {
                     Client.getNotifications(message);
                 }
             }
         }
+        addAction("Sent notification for date " + date + ": " + message);
     }
 
 
     public Client registerClient(Person person) throws InvalidAgeException, DuplicateClientException, ClientAlreadyRegisteredException {
-        if (!Gym.clients.containsKey(person.getID())) {
+        if (!Gym.getInstance().clients.containsKey(person.getID())) {
             throw new ClientAlreadyRegisteredException();
         }
         if (person.calculateAge() < 18) {
@@ -91,7 +94,7 @@ public class Secretary extends Person implements NotificationSubject {
         }
     }
 
-    protected void unregisterClient(Client client) throws ClientNotRegisteredException {
+    public void unregisterClient(Client client) throws ClientNotRegisteredException {
         if (!Gym.clients.containsKey(client.getID())) {
             throw new ClientNotRegisteredException();
         }
@@ -100,47 +103,42 @@ public class Secretary extends Person implements NotificationSubject {
     }
 
 
-    public Instructor hireInstructor(Person person, int salary, ArrayList<SessionType> certifiedTypes) {
+    public Instructor hireInstructor(Person person, int salary, ArrayList<String> certifiedTypes) {
         Instructor newInstructor = new Instructor(person, salary, certifiedTypes);
         addAction("Hired new instructor: " + person.getName() + " with salary per hour: " + salary);
         return newInstructor;
     }
 
 
-    protected Session addSession(SessionType type, String date, ForumType forum, Instructor instructor) throws InstructorNotQualifiedException {
-        if (!instructor.getcertified().contains(type)) {
+    public Session addSession(String sessionTypeClass, String date, ForumType forum, Instructor instructor) throws InstructorNotQualifiedException {
+        if (!instructor.getcertified().contains(sessionTypeClass.getName())) {
             throw new InstructorNotQualifiedException();
         }
-        Session newSession = createSession(type, date, forum, instructor);
+
+        Session newSession = SessionFactory.createSession(sessionTypeClass, date, forum, instructor);
         Gym.sessions.put(newSession.getSessionID(), newSession);
-        addAction("Created new session: " + type + " on " + date + " with instructor: " + instructor.getName());
+        addAction("Created new session: " + sessionTypeClass + " on " + date + " with instructor: " + instructor.getName());
         return newSession;
     }
 
-    protected void registerClientToLesson(Client client, Session session) throws ClientAlreadyRegisteredForLessonException {
+    public void registerClientToLesson(Client client, Session session) throws ClientAlreadyRegisteredForLessonException {
         if (session.getParticipants().containsKey(client.getID())) {
             throw new ClientAlreadyRegisteredForLessonException();
         }
         if (session.getCurrentSizeParticipants() < session.getMaxParticipants() &&
             (client.getBalance() >= session.getPrice() ) &&
-                (getFilteredForumList(client).contains(session.getForum())) &&
-                (session.getDate() >= currentDate)){
+                (!getFilteredForumList(client).contains(session.getForum())) &&
+                (!parseDate(session.getDate()).isAfter(parseDate(currentDate()))){
 
-
-
-                session.addParticipant(client);
+                session.addParticipants(client);
                 client.addSession(session);
-                session.getCurrentSizeParticipants()++;
 
+                client.setBalance(client.getBalance() - session.getPrice());
+                Gym.getInstance().addBalance(session.getPrice());
 
-                client.balance -= session.getPrice();
-                Gym.gymBalance += session.getPrice();
-
-
-                addAction("Registered client: " + client.getName() + " to session: " + session.getSessionType());
+                addAction("Registered client: " + client.getName() + " to session: " + session.getName());
 
         }
-         throw new Execption;
     }
 
 
@@ -150,14 +148,13 @@ public class Secretary extends Person implements NotificationSubject {
             }
             session.removeParticipant(client);
             client.removeSession(session);
-            addAction("Unregistered client: " + client.getName() + " from session: " + session.getType());
+            addAction("Unregistered client: " + client.getName() + " from session: " + session.getName());
         }
 
 
         private void paySalaries () {
 
         }
-
 
         public int getSalary () {
             return salary;
@@ -181,6 +178,16 @@ public class Secretary extends Person implements NotificationSubject {
                 System.out.println(action);
             }
         }
+    protected String currentDate() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return now.format(f);
+    }
+    protected LocalDateTime parseDate(String date) {
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return LocalDateTime.parse(date, f);
+    }
+
 }
 
 

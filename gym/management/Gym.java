@@ -63,5 +63,8 @@ public class Gym {
 
         }
     }
+    public void addBalance(int m){
+        if(m<0){ gymBalance += m;}}
 
+    public int getBalance() {return gymBalance;}
 }

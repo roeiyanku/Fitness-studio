@@ -1,5 +1,7 @@
 package gym.customers;
 
+import gym.management.Sessions.Session;
+
 import java.util.ArrayList;
 
 /**
@@ -9,21 +11,31 @@ import java.util.ArrayList;
 public class Client extends Person implements NotificationObserver{
 
     private ArrayList<String> messages;
+    private ArrayList<Session> sessions;
 
 
     public Client(Person person) {
         super(person.getName(), person.getBalance(), person.getGender(), person.getBirthday());
         this.messages = new ArrayList<>();
+        this.sessions = new ArrayList<>();
+
     }
-
-
-
- // get Notifications and add to the list
- public void getNotifications(String message) {
+    public void addSession(Session session) {
+        if (!sessions.contains(session)) {
+            sessions.add(session);
+        }
+    }
+    public void removeSession(Session session){
+        if (sessions.contains(session)) {
+            sessions.remove(session);
+        }
+    }
+    // get Notifications and add to the list
+    public void getNotifications(String message) {
      messages.add(message);
  }
 
- //Print all messages the client has received
+    //Print all messages the client has received
     public void printMessages() {
         System.out.println("Messages for " + getName() + ":");
         for (String msg : messages) {
