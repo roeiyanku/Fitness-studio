@@ -31,7 +31,7 @@ public class Instructor extends Person{
     //example: ID: 1114 | Name: Shachar | gym.customers.Gender: Female | Birthday: 09-04-1958 | Age: 66 | Balance: 290 | Role: gym.management.Instructor | Salary per Hour: 70 | Certified Classes: ThaiBoxing, MachinePilates
     @Override
     public String toString() {
-        return"ID: " + getID() + " | Name: " + getName() + " | gym.customers.Gender: " + getGender() +
+        return "ID: " + getID() + " | Name: " + getName() + " | gym.customers.Gender: " + getGender() +
                 " | Birthday: " + getBirthday() + " | Age: " + calculateAge() +
                 " | Balance: " + getBalance() + " | Role: " + role + " | Salary per Hour: " + getSalary() +
                 " | Certified Classes: " + certified_classes;

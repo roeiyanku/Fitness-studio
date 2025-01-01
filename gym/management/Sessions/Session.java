@@ -11,7 +11,9 @@ import java.util.Map;
 
 
 public class Session {
-    private String name;
+    private String type;
+   // private String dateandTime;
+    private String time;
     private String date;
     private ForumType forumType; //Male, Female, Seniors or All
     private Instructor instructor;
@@ -22,10 +24,13 @@ public class Session {
     int counter = 0;
     int currentSizeParticipants;
 
-    public Session(String name, int price, int maxParticipants, String date, ForumType forumType, Instructor instructor){
-        this.name = name;
-        this.date = date;
+    public Session(String type, int price, int maxParticipants, String date, String time, ForumType forumType, Instructor instructor){
+     //   splitDateandTime(dateandTime);
+     //  this.dateandTime = dateandTime;
+        this.type = type;
         this.forumType = forumType;
+        this.date = date;
+        this.time = time;
         this.instructor = instructor;
         this.maxParticipants = maxParticipants;
         this.price = price;
@@ -38,15 +43,24 @@ public class Session {
 
     // Getter methods
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
     public int getCurrentSizeParticipants(){ return participants.size(); }
 
+   // public String getDateandTime() {
+    //    return dateandTime;
+  //  }
+
     public String getDate() {
         return date;
     }
+
+    public String getTime() {
+        return time;
+    }
+
 
     public ForumType getForum() {
         return forumType;
@@ -80,14 +94,22 @@ public class Session {
     }
 
 
-
+ /*   public void splitDateandTime(String dateandtime){
+        //split date and time
+        String[] parts = dateandtime.split(" ");
+        // calculate date
+        this.date = parts[0];
+        //take time
+        this.time = parts[1];
+    }
+    */
 
 
 
 //for example: gym.management.Sessions.Session Type: Pilates | Date: 23-01-2025 10:00 | Forum: All | gym.management.Instructor: Yuval | Participants: 1/30
     @Override
     public String toString() {
-        return "gym.management.Sessions.Session Type: " + name + " | Date: " + date + " | Forum: " + forumType + " | gym.management.Instructor: " + instructor.getName() +
+        return "gym.management.Sessions.Session Type: " + type + " | Date: " + date + " " + time + " | Forum: " + forumType + " | gym.management.Instructor: " + instructor.getName() +
                 " | Participants: " + participants.size() + "/" + maxParticipants;
     }
 }

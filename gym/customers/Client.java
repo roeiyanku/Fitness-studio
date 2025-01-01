@@ -1,5 +1,6 @@
 package gym.customers;
 
+import com.sun.security.jgss.GSSUtil;
 import gym.management.Sessions.Session;
 
 import java.util.ArrayList;
@@ -31,9 +32,12 @@ public class Client extends Person implements NotificationObserver{
         }
     }
     // get Notifications and add to the list
-    public void getNotifications(String message) {
-     messages.add(message);
- }
+    public String getNotifications() {
+        return messages.toString();
+    }
+    public void addNotifications(String message) {
+        messages.add(message);
+    }
 
     //Print all messages the client has received
     public void printMessages() {

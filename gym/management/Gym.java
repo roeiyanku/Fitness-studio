@@ -22,6 +22,7 @@ public class Gym {
     public static List<String> actionsHistory = new ArrayList<>(); // actions History
     public static Map<Integer, Client> clients = new HashMap<>(); // Saving clients by ID
     public static Map<Integer, Session> sessions = new HashMap<>(); // Saving session by ID
+    public static Map<Integer, Person> employees = new HashMap<>();
 
 
     // Constructor:
@@ -30,7 +31,6 @@ public class Gym {
         this.gymName = null;
         this.gymBalance = 0;
         this.currentSecretary = null;
-
     }
 
     public static Gym getInstance(){
@@ -53,18 +53,53 @@ public class Gym {
 
     public void setSecretary(Person person, int salary) {
         if (currentSecretary != null) {
+            Gym.employees.remove(currentSecretary.getID(), currentSecretary);
             currentSecretary.setActive(False);
             Secretary newSecretary = new Secretary(person, salary);
+            Gym.employees.put(newSecretary.getID(), newSecretary);
+
             newSecretary.setActive(True);
+            actionsHistory.add("A new secretary has started working at the gym: " + newSecretary.getName() +"\n");
         }
         else {
             Secretary newSecretary = new Secretary(person, salary);
+            Gym.employees.put(newSecretary.getID(), newSecretary);
             currentSecretary.setActive(True);
-
+            actionsHistory.add("A new secretary has started working at the gym: " + newSecretary.getName() +"\n");
         }
     }
-    public void addBalance(int m){
-        if(m<0){ gymBalance += m;}}
+    public void setBalance(int balance){gymBalance = balance;}
 
     public int getBalance() {return gymBalance;}
+
+
+
+
+
+    public String toString() {
+        System.out.println("gym.management.Gym Name: " +gymName);
+        System.out.println("gym.management.Gym gym.management.Secretary: " + gym.management.Secretary.toString());
+        System.out.println("gym.management.Gym Balance: "+ getBalance());
+
+        System.out.println();
+
+        System.out.println("Clients Data:");
+        clients.toString();
+        System.out.println();
+
+
+        System.out.println("Employees Data:");
+        employees.toString();
+        System.out.println();
+
+        System.out.println("Sessions Data:");
+        sessions.toString();
+
+
+
+
+
+
+
+    }
 }

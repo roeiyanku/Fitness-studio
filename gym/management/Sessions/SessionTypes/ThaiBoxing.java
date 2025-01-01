@@ -10,8 +10,8 @@ public class ThaiBoxing extends Session {
     // sessionPrice = 100;
     // maxParticipants = 20;
 
-    public ThaiBoxing(String type, String date, ForumType forumType, Instructor instructor) {
-        super(type, 100, 20,  date, forumType, instructor);
+    public ThaiBoxing(String type, String date, String time, ForumType forumType, Instructor instructor) {
+        super(type, 100, 20,  date, time, forumType, instructor);
     }
 
 

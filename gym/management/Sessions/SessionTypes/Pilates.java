@@ -10,8 +10,8 @@ public class Pilates extends Session {
     // sessionPrice = 60;
     // maxParticipants = 30;
 
-    public Pilates(String type, String date, ForumType forumType, Instructor instructor) {
-        super(type, 60, 30,  date, forumType, instructor);
+    public Pilates(String type, String date, String time, ForumType forumType, Instructor instructor) {
+        super(type, 60, 30, date, time, forumType, instructor);
     }
 
 
