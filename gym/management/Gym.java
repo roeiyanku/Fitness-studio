@@ -3,7 +3,6 @@ package gym.management;
 import gym.customers.Client;
 import gym.customers.Person;
 import gym.management.Sessions.Session;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +38,8 @@ public class Gym {
         }
         return instance;
     }
-    public ArrayList<Client> getClients() {
-        return new ArrayList<>(clients);
+    public Map<Integer, Client> getClients() {
+        return clients;
     }
 
     public void setName(String name){
@@ -54,21 +53,21 @@ public class Gym {
     public void setSecretary(Person person, int salary) {
         if (currentSecretary != null) {
             Gym.employees.remove(currentSecretary.getID(), currentSecretary);
-            currentSecretary.setActive(False);
+            currentSecretary.isWorking = false;
             Secretary newSecretary = new Secretary(person, salary);
             Gym.employees.put(newSecretary.getID(), newSecretary);
 
-            newSecretary.setActive(True);
+            newSecretary.isWorking = true;
             actionsHistory.add("A new secretary has started working at the gym: " + newSecretary.getName() +"\n");
         }
         else {
             Secretary newSecretary = new Secretary(person, salary);
             Gym.employees.put(newSecretary.getID(), newSecretary);
-            currentSecretary.setActive(True);
+            currentSecretary.isWorking = true;
             actionsHistory.add("A new secretary has started working at the gym: " + newSecretary.getName() +"\n");
         }
     }
-    public void setBalance(int balance){gymBalance = balance;}
+    public void setBalance(int balance){ gymBalance = balance;}
 
     public int getBalance() {return gymBalance;}
 
@@ -94,6 +93,8 @@ public class Gym {
 
         System.out.println("Sessions Data:");
         sessions.toString();
+
+        return("");
 
 
 

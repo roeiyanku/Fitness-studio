@@ -1,7 +1,7 @@
 package gym.customers;
-
-import java.util.List;
+import java.util.ArrayList;
 
 public interface NotificationObserver {
-    void getNotifications(String message);
+    String getNotifications();
+    void addNotifications(String message);
 }

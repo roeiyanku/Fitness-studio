@@ -15,6 +15,8 @@ public class SessionFactory {
                 return new Ninja("Ninja", date, time, forum, instructor);
             case SessionType.ThaiBoxing:
                 return new ThaiBoxing("ThaiBoxing", date, time, forum, instructor);
+            default:
+                return null; //IF the session type doesn't apply
 
         }
     }
