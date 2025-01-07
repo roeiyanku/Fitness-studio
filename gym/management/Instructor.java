@@ -1,34 +1,40 @@
 package gym.management;
 
 import gym.customers.Person;
-
 import java.util.ArrayList;
 
 /**
- * gym.management.Instructor class
+ * The Instructor class represents a gym instructor who is also a person.
+ * Instructors have a salary, a role, and a list of certified classes they can teach.
+ * This class extends the Person class.
  */
-
 public class Instructor extends Person{
-    int salary;
-    String role = "gym.management.Instructor";
-    ArrayList<String> certified_classes;
+    int salary; // The salary of the instructor
+    String role = "gym.management.Instructor"; // The role of the instructor, set by default
+    ArrayList<String> certified_classes;  // A list of classes the instructor is certified to teach
 
+    /**
+     * Constructor for creating an Instructor object.
+     * It initializes the instructor's personal details, salary, and list of certified classes.
+     */
     public Instructor(Person person, int salary, ArrayList listofClasses){
+        // Call the constructor of the Person class to initialize personal details
         super(person.getName(), person.getBalance(), person.getGender(), person.getBirthday());
         this.salary = salary;
         this.certified_classes = listofClasses;
     }
-
+    // Retrieves the list of certified classes the instructor can teach.
     public ArrayList<String> getcertified(){
         return certified_classes;
     }
 
+    // Retrieves the salary of the instructor.
     public int getSalary(){
         return salary;
     }
 
-
-    //example: ID: 1114 | Name: Shachar | gym.customers.Gender: Female | Birthday: 09-04-1958 | Age: 66 | Balance: 290 | Role: gym.management.Instructor | Salary per Hour: 70 | Certified Classes: ThaiBoxing, MachinePilates
+    // Provides a detailed string representation of the instructor
+    // return a string summarizing the instructor's details
     @Override
     public String toString() {
         return "ID: " + getID() + " | Name: " + getName() + " | gym.customers.Gender: " + getGender() +
@@ -36,7 +42,4 @@ public class Instructor extends Person{
                 " | Balance: " + getBalance() + " | Role: " + role + " | Salary per Hour: " + getSalary() +
                 " | Certified Classes: " + certified_classes;
     }
-
-
-
 }

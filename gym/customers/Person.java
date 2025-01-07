@@ -1,28 +1,19 @@
-package gym.customers; /**
- *gym.customers.Person class
-*/
+package gym.customers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.Period;
 
-
+// This class represents a person in the gym system
 public class Person {
-
-    private Gender gender;
-    String birthday;
-    String name;
-    public int balance;
-    int id;
-    int counter = 0;
-
-
-
-
-
+    private Gender gender;// The gender of the person
+    String birthday; // The birthdate of the person
+    String name;  // The name of the person
+    public int balance;// The balance in the person's account
+    int id;// Unique ID for the person
+    int counter = 0;// Counter used to assign unique IDs
 
 //Constructor
-
     public Person(String name, int balance, Gender gender, String birthday){
         this.name = name;
         this.balance = balance;
@@ -30,31 +21,24 @@ public class Person {
         this.birthday = birthday;
         this.id = 1111 + counter;
         counter ++;
-
-
     }
 
-
     //Getters and Setters
-
     public String getName(){
         return name;
     }
     public int getBalance(){
         return balance;
     }
-    public void setBalance(int balance){
-        this.balance = balance;
-    }
-    public Gender getGender() {
-        return gender;}
-
+    public Gender getGender() { return gender ;}
     public int getID(){
         return id;
     }
-
     public String getBirthday(){
     return birthday;
+    }
+    public void setBalance(int balance){
+        this.balance = balance;
     }
 
 
